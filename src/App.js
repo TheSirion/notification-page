@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext } from "react";
+
+import { NotificationContext } from "./Contexts/Notification.context";
+
+import MarkAllAsReadButton from "./components/MarkAllAsReadButton/MarkAllAsReadButton.component";
+import NotificationCounter from "./components/Notification Counter/NotificationCounter.component";
+import Notification from "./components/Notification/Notification.component";
+
+import { HomePageHeader, HomePageStyles } from "./App.styles";
 
 function App() {
+  const notificationsArray = useContext(NotificationContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HomePageStyles>
+      <HomePageHeader>
+        <NotificationCounter />
+        <MarkAllAsReadButton />
+      </HomePageHeader>
+      {notificationsArray.map(notification => {
+        return (
+          <Notification key={notification.id} notification={notification} />
+        );
+      })}
+    </HomePageStyles>
   );
 }
 
